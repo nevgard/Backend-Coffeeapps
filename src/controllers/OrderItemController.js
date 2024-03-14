@@ -1,9 +1,9 @@
-const { OrderItems } = require("../db/models");
+const { OrderItem } = require("../db/models");
 
 module.exports.createOrderItem = async (req, res) => {
   try {
-    const orderItem = await OrderItems.create(req.body);
-    res.status(201).json({ orderItem });
+    const data = await OrderItem.create(req.body);
+    res.status(201).json({ msg: "Order item created success", data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -11,8 +11,8 @@ module.exports.createOrderItem = async (req, res) => {
 
 module.exports.getOrderItems = async (req, res) => {
   try {
-    const orderItems = await OrderItems.findAll();
-    res.status(200).json({ orderItems });
+    const data = await OrderItem.findAll();
+    res.status(200).json({ msg: "get Order item Success", data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -20,11 +20,11 @@ module.exports.getOrderItems = async (req, res) => {
 
 module.exports.getOrderItemById = async (req, res) => {
   try {
-    const orderItem = await OrderItems.findByPk(req.params.id);
-    if (!orderItem) {
+    const data = await OrderItem.findByPk(req.params.id);
+    if (!data) {
       return res.status(404).json({ error: "Order item not found" });
     }
-    res.status(200).json({ orderItem });
+    res.status(200).json({ msg: "Get Order item Success", data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -32,12 +32,12 @@ module.exports.getOrderItemById = async (req, res) => {
 
 module.exports.updateOrderItem = async (req, res) => {
   try {
-    const orderItem = await OrderItems.findByPk(req.params.id);
-    if (!orderItem) {
+    const data = await OrderItem.findByPk(req.params.id);
+    if (!data) {
       return res.status(404).json({ error: "Order item not found" });
     }
-    await orderItem.update(req.body);
-    res.status(200).json({ orderItem });
+    await data.update(req.body);
+    res.status(200).json({ msg: "Update Order item Success", data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -45,8 +45,8 @@ module.exports.updateOrderItem = async (req, res) => {
 
 module.exports.deleteOrderItem = async (req, res) => {
   try {
-    const orderItem = await OrderItems.findByPk(req.params.id);
-    if (!orderItem) {
+    const data = await OrderItem.findByPk(req.params.id);
+    if (!data) {
       return res.status(404).json({ error: "Order item not found" });
     }
     await orderItem.destroy();

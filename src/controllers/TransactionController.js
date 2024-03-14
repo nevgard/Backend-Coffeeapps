@@ -2,8 +2,8 @@ const { Transactions } = require("../db/models");
 
 module.exports.createTransaction = async (req, res) => {
   try {
-    const transaction = await Transactions.create(req.body);
-    res.status(201).json({ transaction });
+    const data = await Transactions.create(req.body);
+    res.status(201).json({ msg: "Transaction created success", data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -11,8 +11,8 @@ module.exports.createTransaction = async (req, res) => {
 
 module.exports.getTransactions = async (req, res) => {
   try {
-    const transactions = await Transactions.findAll();
-    res.status(200).json({ transactions });
+    const data = await Transactions.findAll();
+    res.status(200).json({ msg: "get Transactions Success", data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -20,11 +20,11 @@ module.exports.getTransactions = async (req, res) => {
 
 module.exports.getTransactionById = async (req, res) => {
   try {
-    const transaction = await Transactions.findByPk(req.params.id);
-    if (!transaction) {
+    const data = await Transactions.findByPk(req.params.id);
+    if (!data) {
       return res.status(404).json({ error: "Transaction not found" });
     }
-    res.status(200).json({ transaction });
+    res.status(200).json({ msg: " Get Transaction Success", data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -32,12 +32,12 @@ module.exports.getTransactionById = async (req, res) => {
 
 module.exports.updateTransaction = async (req, res) => {
   try {
-    const transaction = await Transactions.findByPk(req.params.id);
-    if (!transaction) {
+    const data = await Transactions.findByPk(req.params.id);
+    if (!data) {
       return res.status(404).json({ error: "Transaction not found" });
     }
-    await transaction.update(req.body);
-    res.status(200).json({ transaction });
+    await data.update(req.body);
+    res.status(200).json({ msg: " Update Transaction Success", data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -45,11 +45,11 @@ module.exports.updateTransaction = async (req, res) => {
 
 module.exports.deleteTransaction = async (req, res) => {
   try {
-    const transaction = await Transactions.findByPk(req.params.id);
-    if (!transaction) {
+    const data = await Transactions.findByPk(req.params.id);
+    if (!data) {
       return res.status(404).json({ error: "Transaction not found" });
     }
-    await transaction.destroy();
+    await data.destroy();
     res.status(204).json({ message: "Transaction deleted" });
   } catch (error) {
     res.status(500).json({ error: error.message });

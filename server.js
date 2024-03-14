@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const session = require("express-session");
+const SequelizeStore = require("connect-session-sequelize");
+require("dotenv").config();
 
 const router = require("./src/routers/index");
+const configSession = require("./src/util/sessionConfig");
 
 const app = express();
 const PORT = process.env.PORT || 9001;
@@ -15,7 +17,7 @@ app.use(
 );
 
 app.use(express.json());
-
+app.use(configSession());
 app.use(router);
 
 app.listen(PORT, () => {
