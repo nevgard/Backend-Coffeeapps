@@ -36,10 +36,12 @@ module.exports.createUser = async (req, res) => {
     if (existingPhoneNumber) {
       return res.status(400).json({ error: "Phone number already exists" });
     }
+    const hashedPassword = await argon2.hash(password);
+
     const data = await Users.create({
       fullName,
       email,
-      password,
+      password: hashedPassword,
       birthDate,
       phoneNumber,
     });
